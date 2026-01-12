@@ -1,0 +1,75 @@
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE and Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Log Files
+*.log
+logs/
+*.log.*
+
+# Temporary Files
+*.tmp
+*.temp
+.cache/
+
+# Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Database Files
+*.db
+*.sqlite
+*.sqlite3
+
+# Uploads and Generated Files
+uploads/
+*.pdf
+*.docx
+*.xlsx
+
+# Build Artifacts
+dist/
+build/
+*.egg-info/
+
+# Coverage Reports
+coverage/
+.coverage
+*.cover
+htmlcov/
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints
+
+# Windows Executables
+*.exe
+*.msi
+*.dll
+
+# Mac OS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+
+# Application specific
+*.pem
+*.key
+*.crt

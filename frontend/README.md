@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Aionix AI Dashboard Starter
+
+This is a production-grade Next.js 14 SaaS dashboard starter for enterprise AI admin use-cases.
+
+## Features
+
+- Next.js 14 App Router, TypeScript
+- TailwindCSS (with dark mode, accessible, scalable UI)
+- ESLint & Prettier
+- JWT authentication with FastAPI backend (role-based: admin/stakeholder)
+- Route protection and UI-level RBAC
+- Secure token handling (HttpOnly cookies)
+- Modular, enterprise folder structure
+- Real-time, accessible, and responsive dashboard UI
+- Error handling (toast notifications, empty states, loaders)
+- Security best practices: CSP, secure cookies, API fallback, code splitting
 
 ## Getting Started
 
-First, run the development server:
+1. **Install dependencies:**
+   ```bash
+   npm install
+   # or
+   yarn
+   ```
+2. **Configure environment:**
+   - Copy `.env.example` to `.env.local` and fill in your API URLs/secrets.
+3. **Run the app:**
+   ```bash
+   npm run dev
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Project Structure
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- `/app` – Next.js App Router pages/layouts (login, dashboard, sections)
+- `/components` – UI, Auth, Dashboard, charts, utilities
+- `/context` – React context (AuthProvider)
+- `/lib` – API calls and helpers (auth, dashboard, rbac)
+- `/hooks` – Custom hooks (auth, toast, websocket)
+- `/styles` – Tailwind and global CSS
+- `/middleware.ts` – RBAC and token protection
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How Authentication Works
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Login/Signup** connects to FastAPI backend for JWT-issued tokens.
+- JWT is stored in an HttpOnly cookie for security.
+- Frontend decodes and checks role for RBAC (admin, stakeholder).
+- Backend must enforce roles as well for API protection.
 
-## Learn More
+## RBAC (Role-Based Access)
 
-To learn more about Next.js, take a look at the following resources:
+- Pages and components are protected based on role (see `middleware.ts` and Sidebar).
+- Admin-only settings. Only admins can see and use certain actions/UI.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Security & Performance
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- CSP headers set in Next.js config.
+- API rate limit errors handled gracefully.
+- Code-split (lazy load) charts, insights, etc.
+- Strong typing and linting everywhere.
 
-## Deploy on Vercel
+## Customization
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Use, swap, or extend all stubs/components as you build out your SaaS dashboard.
+Customize the dashboard's cards, charts, real-time view, forms, and error handling!
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+MIT © 2026 Aionix
+

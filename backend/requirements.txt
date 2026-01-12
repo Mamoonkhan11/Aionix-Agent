@@ -1,0 +1,66 @@
+# Core dependencies
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# Database
+sqlalchemy==2.0.23
+asyncpg==0.29.0
+alembic==1.12.1
+
+# Authentication
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+
+# HTTP client
+httpx==0.25.2
+aiofiles==23.2.1
+
+# Document processing
+PyPDF2==3.0.1
+python-docx==1.1.0
+
+# Logging and utilities
+structlog==23.2.0
+python-json-logger==2.0.7
+
+# AI Engine dependencies
+openai==1.3.0
+langchain==0.1.0
+langchain-community==0.0.10
+transformers==4.35.0
+torch==2.9.1
+sentence-transformers==2.2.2
+tiktoken==0.5.1
+tenacity==8.2.3
+
+# Vector databases (optional - install as needed)
+pinecone-client==2.2.4
+weaviate-client==3.25.3
+
+# Background tasks (optional)
+celery==5.3.4
+redis==5.0.1
+
+# Web Search and APIs
+google-search-results==2.4.2  # SerpAPI client
+requests==2.31.0
+
+# Voice and Audio Processing
+speechrecognition==3.10.0  # Speech-to-text
+pyaudio==0.2.13  # Audio recording (optional)
+websockets==11.0.3  # Real-time audio streaming
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+httpx==0.25.2  # for testing FastAPI
+
+# Development
+black==23.11.0
+isort==5.12.0
+flake8==6.1.0
+mypy==1.7.1

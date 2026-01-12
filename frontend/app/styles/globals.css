@@ -1,0 +1,16 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+body {
+  @apply font-sans bg-gray-50 text-gray-900 dark:bg-zinc-950 dark:text-gray-100;
+}
+
+.input {
+  @apply px-3 py-2 border border-gray-300 rounded bg-gray-50 dark:bg-zinc-800 focus:outline-none focus:border-primary w-full;
+}
+
+.btn-primary {
+  @apply px-4 py-2 rounded font-medium bg-primary text-white hover:bg-blue-600 transition;
+}
+
