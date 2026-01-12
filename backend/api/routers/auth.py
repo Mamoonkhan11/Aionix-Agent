@@ -22,7 +22,7 @@ from schemas.auth import (
     LoginResponse,
     PasswordChangeRequest,
     Token,
-    User,
+    User as UserSchema,
     UserCreate,
     UserPublic,
     UserUpdate,
@@ -103,8 +103,11 @@ async def login_for_access_token(
         HTTPException: If credentials are invalid
     """
     try:
+        print(f"DEBUG: Login attempt for username: {form_data.username}")
         user = await authenticate_user(db, form_data.username, form_data.password)
+        print(f"DEBUG: authenticate_user returned: {user}")
         if not user:
+            print("DEBUG: User not found or authentication failed")
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Incorrect username or password",
@@ -112,17 +115,20 @@ async def login_for_access_token(
             )
 
         if not user.is_active:
+            print("DEBUG: User is not active")
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Inactive user"
             )
 
+        print("DEBUG: Creating access token")
         access_token_expires = timedelta(minutes=settings.access_token_expire_minutes)
         access_token = create_access_token(
             data={"sub": str(user.id)},
             expires_delta=access_token_expires
         )
 
+        print("DEBUG: Returning token")
         return Token(
             access_token=access_token,
             token_type="bearer",
@@ -134,6 +140,9 @@ async def login_for_access_token(
     except Exception as e:
         # Catch any unexpected errors and return 401 instead of 500
         # Log the error for debugging but don't expose internal details
+        print(f"DEBUG: Unexpected error in login: {e}")
+        import traceback
+        traceback.print_exc()
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Authentication failed",
@@ -201,10 +210,10 @@ async def login_json(
         )
 
 
-@router.get("/me", response_model=User)
+@router.get("/me", response_model=UserSchema)
 async def read_users_me(
     current_user: User = Depends(get_current_user),
-) -> User:
+) -> UserSchema:
     """
     Get current user information.
 
@@ -219,12 +228,12 @@ async def read_users_me(
     return current_user
 
 
-@router.put("/me", response_model=User)
+@router.put("/me", response_model=UserSchema)
 async def update_user_profile(
     user_update: UserUpdate,
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
-) -> User:
+) -> UserSchema:
     """
     Update current user's profile.
 
@@ -326,11 +335,11 @@ async def get_users(
     return [UserPublic.model_validate(user) for user in users]
 
 
-@router.get("/users/{user_id}", response_model=User, dependencies=[Depends(get_current_admin_user)])
+@router.get("/users/{user_id}", response_model=UserSchema, dependencies=[Depends(get_current_admin_user)])
 async def get_user(
     user_id: str,
     db: AsyncSession = Depends(get_db),
-) -> User:
+) -> UserSchema:
     """
     Get specific user by ID (admin only).
 

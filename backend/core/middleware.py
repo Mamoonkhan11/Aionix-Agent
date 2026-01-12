@@ -169,6 +169,11 @@ class ErrorHandlingMiddleware(BaseHTTPMiddleware):
             exc_info=True
         )
 
+        # DEBUG: Print error to stdout for immediate visibility
+        print(f"DEBUG ERROR: {type(exc).__name__}: {str(exc)}")
+        import traceback
+        traceback.print_exc()
+
         # Return generic error response (don't expose internal details)
         return JSONResponse(
             status_code=500,

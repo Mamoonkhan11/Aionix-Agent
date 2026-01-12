@@ -14,7 +14,7 @@ backend_dir = Path(__file__).parent.parent
 sys.path.insert(0, str(backend_dir))
 
 from core.security.auth import create_user, get_user_by_email
-from db.database import db_manager, init_database
+from db.database import get_db, init_database
 
 
 async def create_admin_user():
@@ -33,7 +33,11 @@ async def create_admin_user():
         "role": "admin"
     }
 
-    async with db_manager.get_session() as db:
+    from db.database import db_manager
+
+    # Create session manually for script
+    session_maker = db_manager._async_session_maker
+    async with session_maker() as db:
         try:
             # Check if admin user already exists
             existing_user = await get_user_by_email(db, admin_data["email"])

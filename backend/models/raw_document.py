@@ -8,7 +8,7 @@ in a normalized format, regardless of the original source.
 from enum import Enum
 from typing import Dict, Optional
 
-from sqlalchemy import Boolean, Column, Float, Integer, JSON, String, Text
+from sqlalchemy import Boolean, Column, Float, ForeignKey, Integer, JSON, String, Text
 from sqlalchemy.orm import Mapped, relationship
 from sqlalchemy.sql import func
 
@@ -40,7 +40,7 @@ class RawDocument(Base):
     source_type: Mapped[DocumentSourceType] = Column(String(20), nullable=False, index=True)
 
     # Source information
-    source_id: Mapped[Optional[str]] = Column(String(255), index=True)  # Foreign key to data_sources
+    source_id: Mapped[Optional[str]] = Column(String(255), ForeignKey("data_sources.id"), index=True)  # Foreign key to data_sources
     external_id: Mapped[Optional[str]] = Column(String(255), index=True)  # ID from external source
     source_url: Mapped[Optional[str]] = Column(String(500))
 

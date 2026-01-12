@@ -97,19 +97,30 @@ class DatabaseManager:
 # Global database manager instance
 db_manager = DatabaseManager()
 
+# Initialize database connection on import
+# This ensures the session maker is available when get_db is called
+try:
+    db_manager.create_engine()
+    db_manager.create_session_maker()
+except Exception:
+    # Database might not be configured yet, will be initialized in lifespan
+    pass
+
 
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
     """
     Dependency function for FastAPI to get database session.
 
-    This function is used as a dependency in FastAPI routes to provide
-    database sessions with automatic cleanup.
+    Yields a database session for use in routes.
 
     Yields:
         AsyncSession: Database session
     """
-    async with db_manager.get_session() as session:
+    session = db_manager._async_session_maker()
+    try:
         yield session
+    finally:
+        await session.close()
 
 
 async def init_database() -> None:
